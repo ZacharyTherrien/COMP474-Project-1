@@ -1,0 +1,19 @@
+Chatbot: Hello! Enter your question for help or 'bye' to exit.
+You: Hi
+Chatbot:  Hello! can I help you?
+You: Can you help me?
+Chatbot:  I can answer your questions. Try asking about something more specific!
+You: What is an if statement in Java?
+Chatbot:  An 'if statement' in Java is used to evaluate a boolean expression. If the expression is true, the block of code inside the 'if' statement is executed. It allows for conditional execution of code.
+You: 
+Chatbot:  I'm sorry, I didn't understand that. Could you rephrase?
+You: How can I use a for loop?
+Chatbot:  Used to execute a block of code repeatedly, including for, while, and do-while loops.
+You: What is the main method?
+Chatbot:  The main method is the block of code that the program will look for and execute first.
+You: Can you explain the Math functions in Java?
+Chatbot:  Java provides a Math class that contains methods for performing basic numeric operations such as exponentiation, logarithms, square roots, and trigonometric functions. For example, 'Math.sqrt()' computes the square root.
+You: What are array lists?
+Chatbot:  A collection of elements of the same type, accessed by an index. They can store multiple values in a single variable.
+You: Goodbye. :)
+Chatbot:  Goodbye! Have a great day!

@@ -40,27 +40,27 @@ responses = {
 # Define keywords to that apply to the appropriate response (for those that apply) from the responses dictionary
 keywords = { 
     "help" : {"help", "advice", "question"},
-    "greet" : {"hi", "hello", "greetings", "how are you"},
+    "greet" : {"hi", "hello", "greeting", "how are you"},
     "bye" : {"bye", "goodbye", "see you", "have a good day"},
-    "variables": ["variables", "declaration", "initialization", "variable"], 
-    "data types": ["data types", "int", "float", "double", "char", "boolean", "String", "byte", "short", "long"], 
-    "operators": ["operators", "operator", "arithmetic", "relational", "bitwise", "assignment", "unary"], 
-    "loops": ["loop", "loops", "for", "while", "do while"],
-    "arrays": ["arrays", "array", "single-dimensional", "indexing"], 
-    "strings": ["string", "strings", "substring", "concat", "equals", "indexOf", "index of"], 
-    "methods": ["methods", "parameters", "return type", "recursion"], 
-    "classes": ["class", "classes", "definition", "fields", "constructors"], 
-    "objects": ["instantiation", "reference", "object", "objects"], 
+    "variables": ["declaration", "initialization", "variable"], 
+    "data types": ["data type", "int", "float", "double", "char", "boolean", "String", "byte", "short", "long"], 
+    "operators": ["operator", "arithmetic", "relational", "bitwise", "assignment", "unary"], 
+    "loops": ["loop", "for", "while", "do while"],
+    "arrays": ["array", "single-dimensional", "indexing"], 
+    "strings": ["string", "substring", "concat", "equal", "indexOf", "index of"], 
+    "methods": ["method", "parameters", "return type", "recursion"], 
+    "classes": ["class", "definition", "field", "constructor", "object blueprint"], 
+    "objects": ["instantiation", "reference", "object"], 
     "inheritance": ["inheritance", "superclass", "subclass", "extends"], 
     "polymorphism": ["polymorphism", "overloading", "overriding", "dynamic binding"], 
     "encapsulation": ["encapsulation", "getter", "setter", "data hiding"], 
-    "interfaces": ["interface", "implementation", "multiple inheritance", "abstract methods"], 
-    "abstract classes": ["abstract", "abstract methods"], 
-    "exception handling": ["exception", "handling", "try", "catch", "finally", "throw", "throws", "custom exceptions"], 
+    "interfaces": ["interface", "implementation", "multiple inheritance"], 
+    "abstract classes": ["abstract", "abstract method"], 
+    "exception handling": ["exception", "handling", "try", "catch", "finally", "throw", "custom exception"], 
     "if statement": ["conditional", "true", "false", "nested", "if"], 
     "else": ["alternative block", "else"], 
     "logical operators": ["logical", "logical operator", "and", "or", "not", "&&", "||", "!"], 
-    "2d arrays": ["2d", "two-dimensional", "accessing elements", "lengths"], 
+    "2d arrays": ["2d", "two-dimensional", "accessing element"], 
     "array lists": ["array list", "dynamic array", "add element", "remove"], 
     "break": ["exit loop", "break", "stop loop"], 
     "math functions": ["math", "abs", "sqrt", "pow", "random", "round"], 
@@ -76,12 +76,11 @@ def get_response(input):
     # Process input with NLP
     statement = nlp(input)
     for token in statement:
-        token = token.text.lower()
         # Check if the token matches any keyword for the appropriate response
         for key, value in keywords.items():
             # Prioritize responses higher with higher index in dictionary
             # Ex. "hi bye" will prioritize "bye" since its response comes after "hi"
-            if token in value and list(keywords).index(key) >= keyIdx:
+            if token.lemma_.lower() in value and list(keywords).index(key) >= keyIdx:
                 response = responses[key]
                 keyIdx = list(keywords).index(key)
     return response
