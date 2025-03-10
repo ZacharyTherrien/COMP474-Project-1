@@ -1,10 +1,10 @@
 import spacy
 import re
 
-#Load NLP Model
+# Load NLP Model
 nlp = spacy.load("en_core_web_sm")
 
-#Define responses with dictionary, targeted for students learning OOP
+# Define responses with dictionary, targeted for students learning OOP
 responses = {
     "default" : "I'm sorry, I didn't understand that. Could you rephrase?",
     "help" : "I can answer your questions. Try asking about something more specific!",
@@ -23,8 +23,8 @@ responses = {
     "polymorphism": "The ability of different classes to be treated as instances of the same class through a common interface.", 
     "encapsulation": "The bundling of data (attributes) and methods that operate on the data into a single unit (class).", 
     "interfaces": "A reference type in Java that can contain only constants, method signatures, default methods, static methods, and nested types.", 
-    "abstract Classes": "Classes that cannot be instantiated and can contain abstract methods that must be implemented by subclasses.", 
-    "exception Handling": "A mechanism to handle runtime errors using try, catch, and finally blocks to maintain normal program flow.",
+    "abstract classes": "Classes that cannot be instantiated and can contain abstract methods that must be implemented by subclasses.", 
+    "exception handling": "A mechanism to handle runtime errors using try, catch, and finally blocks to maintain normal program flow.",
     "if statement": "An 'if statement' in Java is used to evaluate a boolean expression. If the expression is true, the block of code inside the 'if' statement is executed. It allows for conditional execution of code.", 
     "else": "The 'else' statement in Java is used in conjunction with an 'if statement'. It provides an alternative block of code that executes when the 'if' condition evaluates to false.", 
     "logical operators": "Logical operators in Java are used to combine multiple boolean expressions. The main logical operators are '&&' (AND), '||' (OR), and '!' (NOT). They help in making complex conditional statements.", 
@@ -37,17 +37,17 @@ responses = {
     "main" : "The main method is the block of code that the program will look for and execute first."
 }
 
-#Define keywords to that apply to the appropriate response (for those that apply) from the responses dictionary
+# Define keywords to that apply to the appropriate response (for those that apply) from the responses dictionary
 keywords = { 
     "help" : {"help", "advice", "question"},
     "greet" : {"hi", "hello", "greetings", "how are you"},
     "bye" : {"bye", "goodbye", "see you", "have a good day"},
     "variables": ["variables", "declaration", "initialization", "variable"], 
     "data types": ["data types", "int", "float", "double", "char", "boolean", "String", "byte", "short", "long"], 
-    "operators": ["operators", "arithmetic", "relational", "logical", "bitwise", "assignment", "unary"], 
+    "operators": ["operators", "operator", "arithmetic", "relational", "bitwise", "assignment", "unary"], 
     "loops": ["loop", "loops", "for", "while", "do while"],
     "arrays": ["arrays", "array", "single-dimensional", "indexing"], 
-    "strings": ["string", "substring", "concat", "equals", "indexOf", "index of"], 
+    "strings": ["string", "strings", "substring", "concat", "equals", "indexOf", "index of"], 
     "methods": ["methods", "parameters", "return type", "recursion"], 
     "classes": ["class", "classes", "definition", "fields", "constructors"], 
     "objects": ["instantiation", "reference", "object", "objects"], 
@@ -59,29 +59,34 @@ keywords = {
     "exception handling": ["exception", "handling", "try", "catch", "finally", "throw", "throws", "custom exceptions"], 
     "if statement": ["conditional", "true", "false", "nested", "if"], 
     "else": ["alternative block", "else"], 
-    "logical operators": ["logical operator", "and", "or", "not", "&&", "||", "!"], 
+    "logical operators": ["logical", "logical operator", "and", "or", "not", "&&", "||", "!"], 
     "2d arrays": ["2d", "two-dimensional", "accessing elements", "lengths"], 
     "array lists": ["array list", "dynamic array", "add element", "remove"], 
     "break": ["exit loop", "break", "stop loop"], 
     "math functions": ["math", "abs", "sqrt", "pow", "random", "round"], 
     "type casting": ["casting", "implicit", "explicit", "primitive"], 
-    "scope": ["scope", "local"],
+    "scope": ["scope", "local", "out of scope"],
     "main": ["main", "start"]
 }
 
-#Process User Input with NLP
+# Process User Input with NLP and return appropriate response
 def get_response(input):
     response = responses["default"]
+    keyIdx = 0
+    # Process input with NLP
     statement = nlp(input)
     for token in statement:
-        k = token.text.lower()
+        token = token.text.lower()
+        # Check if the token matches any keyword for the appropriate response
         for key, value in keywords.items():
-            if k in value:
+            # Prioritize responses higher with higher index in dictionary
+            # Ex. "hi bye" will prioritize "bye" since its response comes after "hi"
+            if token in value and list(keywords).index(key) >= keyIdx:
                 response = responses[key]
-                return response
+                keyIdx = list(keywords).index(key)
     return response
 
-#User Interaction Loop
+# User Interaction Loop
 def chat():
     print("Chatbot: Hello! Enter your question for help or 'bye' to exit.")
     while True:
